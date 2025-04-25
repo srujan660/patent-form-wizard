@@ -26,6 +26,14 @@ const PatentForm: React.FC = () => {
     <ReviewStep key="review" />
   ];
 
+  const handleStepClick = (step: number) => {
+    // Only allow navigation to steps that are less than or equal to the current step
+    if (step <= currentStep) {
+      setCurrentStep(step);
+      window.scrollTo(0, 0);
+    }
+  };
+
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
@@ -46,7 +54,11 @@ const PatentForm: React.FC = () => {
 
   return (
     <div className="container max-w-4xl mx-auto px-4 py-8">
-      <StepIndicator steps={steps} currentStep={currentStep} />
+      <StepIndicator 
+        steps={steps} 
+        currentStep={currentStep} 
+        onStepClick={handleStepClick}
+      />
       
       <div className="mt-8 mb-12">
         {stepComponents[currentStep]}
